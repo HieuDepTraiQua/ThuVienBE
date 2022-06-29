@@ -13,11 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.quanly.thuvien.dto.BookDTO;
 import com.quanly.thuvien.dto.CustomerDTO;
-import com.quanly.thuvien.model.AuthorModel;
-import com.quanly.thuvien.model.BookModel;
-import com.quanly.thuvien.model.CategoryModel;
 import com.quanly.thuvien.model.CustomerModel;
 import com.quanly.thuvien.model.LibraryCardModel;
 import com.quanly.thuvien.repository.CustomerRepository;
@@ -76,7 +72,6 @@ public class CustomerService {
 		return new PageImpl<>(list, pageable, list.size());
 	};
 	
-	
 	public List<CustomerDTO> getListCustomerDto(List<CustomerModel> listCustomer) {
 		List<CustomerDTO> listDto = new ArrayList<>();
 		for (CustomerModel customer : listCustomer) {
@@ -103,6 +98,4 @@ public class CustomerService {
 		BeanUtils.copyProperties(customer, dto);
 		return dto;
 	};
-
-	
 }

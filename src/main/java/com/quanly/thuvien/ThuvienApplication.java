@@ -14,7 +14,6 @@ import com.quanly.thuvien.model.AccountModel;
 import com.quanly.thuvien.repository.AccountRepository;
 
 @SpringBootApplication
-//extends SpringBootServletInitializer 
 public class ThuvienApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -104,17 +105,38 @@ public class CategoryController {
 		}
 	};
 	
+//	@RequestMapping(value = "/get", method = RequestMethod.GET)
+//	@CrossOrigin(origins = "*", maxAge = 3600)
+//	public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
+//			@RequestParam(defaultValue = "10") int size) {
+//		Map<String, Object> response = new HashMap<>();
+//		try {
+//			Pageable paging = PageRequest.of(page, size);
+//			Page<CategoryModel> data = categoryService.get(paging);
+//			response.put("data", data.getContent());
+//			response.put("totalRecord", data.getTotalElements());
+//			response.put("totalPage", data.getTotalPages());
+//			response.put("success", true);
+//			response.put("message", "Ok");
+//			return new ResponseEntity<>(response, HttpStatus.OK);
+//		} catch (Exception e) {
+//			response.put("success", false);
+//			response.put("message", e.getMessage());
+//			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//		}
+//	};
+	
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size) {
+			@RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "") String keyword) {
 		Map<String, Object> response = new HashMap<>();
 		try {
-			Pageable paging = PageRequest.of(page, size);
-			Page<CategoryModel> data = categoryService.get(paging);
-			response.put("data", data.getContent());
-			response.put("totalRecord", data.getTotalElements());
-			response.put("totalPage", data.getTotalPages());
+			PagedListHolder<CategoryModel> data = categoryService.get(page, size, keyword);
+			response.put("data", data.getPageList());
+			response.put("totalRecord", data.getSource().size());
+			response.put("totalPage", data.getPageCount());
 			response.put("success", true);
 			response.put("message", "Ok");
 			return new ResponseEntity<>(response, HttpStatus.OK);

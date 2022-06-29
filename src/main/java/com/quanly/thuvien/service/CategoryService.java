@@ -6,8 +6,7 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
 import com.quanly.thuvien.model.CategoryModel;
@@ -59,7 +58,19 @@ public class CategoryService {
 		}
 	};
 	
-	public Page<CategoryModel> get(Pageable pageable) {
-		return categoryRepository.findAll(pageable);
+	public PagedListHolder<CategoryModel> get(int page, int size, String keyword) {
+		boolean b = keyword == null || keyword.equals(null) || keyword.isEmpty();
+		PagedListHolder<CategoryModel> pageList = new PagedListHolder<>();
+		if (!b) {
+			List<CategoryModel> list = categoryRepository.findByKeyword(keyword);
+			pageList.setSource(list);
+		}
+		else {
+			List<CategoryModel> list = categoryRepository.findAll();
+			pageList.setSource(list);
+		}
+		pageList.setPage(page);
+		pageList.setPageSize(size);
+		return pageList;
 	};
 }
