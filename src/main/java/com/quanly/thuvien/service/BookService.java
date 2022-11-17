@@ -1,5 +1,7 @@
 package com.quanly.thuvien.service;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +44,8 @@ public class BookService {
 		if (!opCate.isPresent()) {
 			throw new EntityNotFoundException("Category Id not found!");
 		}
-
+		Path staticPath = Paths.get("static");
+        Path imagePath = Paths.get("images");
 		return bookRepository.save(book);
 	};
 	

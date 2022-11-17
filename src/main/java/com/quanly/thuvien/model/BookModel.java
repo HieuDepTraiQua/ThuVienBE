@@ -1,64 +1,76 @@
 package com.quanly.thuvien.model;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(value = "book")
 public class BookModel {
- @Id
- private String id;
- 
- @Field(value = "nameBook")
- private String nameBook;
- 
- @Field(value = "authorId")
- private String authorId;
- 
- @Field(value = "categoryId")
- private String categoryId;
- 
- @Field (value = "publishYear")
- private String publishYear;
+	@Id
+	private String id;
 
-public String getId() {
-	return id;
-}
+	@Field(value = "nameBook")
+	private String nameBook;
 
-public void setId(String id) {
-	this.id = id;
-}
+	@Field(value = "authorId")
+	private String authorId;
 
-public String getNameBook() {
-	return nameBook;
-}
+	@Field(value = "categoryId")
+	private String categoryId;
 
-public void setNameBook(String nameBook) {
-	this.nameBook = nameBook;
-}
+	@Field(value = "publishYear")
+	private String publishYear;
 
-public String getAuthorId() {
-	return authorId;
-}
+	@Field(value = "image")
+	private String image;
 
-public void setAuthorId(String authorId) {
-	this.authorId = authorId;
-}
+	public String getId() {
+		return id;
+	}
 
-public String getCategoryId() {
-	return categoryId;
-}
+	public void setId(String id) {
+		this.id = id;
+	}
 
-public void setCategoryId(String categoryId) {
-	this.categoryId = categoryId;
-}
+	public String getNameBook() {
+		return nameBook;
+	}
 
-public String getPublishYear() {
-	return publishYear;
-}
+	public void setNameBook(String nameBook) {
+		this.nameBook = nameBook;
+	}
 
-public void setPublishYear(String publishYear) {
-	this.publishYear = publishYear;
-}
- 
+	public String getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getPublishYear() {
+		return publishYear;
+	}
+
+	public void setPublishYear(String publishYear) {
+		this.publishYear = publishYear;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.quanly.thuvien;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.quanly.thuvien.model.AccountModel;
+import com.quanly.thuvien.model.RoleModel;
 import com.quanly.thuvien.repository.AccountRepository;
+import com.quanly.thuvien.repository.RoleRepository;
 
 @SpringBootApplication
 public class ThuvienApplication extends SpringBootServletInitializer {
@@ -22,6 +25,9 @@ public class ThuvienApplication extends SpringBootServletInitializer {
 
 	@Autowired
     AccountRepository accountRepository;
+	
+	@Autowired
+	RoleRepository roleRepository;
 	
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -39,29 +45,17 @@ public class ThuvienApplication extends SpringBootServletInitializer {
 	CommandLineRunner init(AccountRepository accountRepository,
 			PasswordEncoder passwordEncoder) {
 		return args -> {
-//			List<RoleModel> adminRole = roleRepository.findByTitleCode("ADMIN");
-//			if (adminRole.size() == 0) {
-//				RoleModel newAdmin = new RoleModel("ADMIN");
-//				roleRepository.save(newAdmin);
-//			}
-//
-//			List<RoleModel> cskhRole = roleRepository.findByTitleCode("CSKH");
-//			if (cskhRole.size() == 0) {
-//				RoleModel newCSKH = new RoleModel("CSKH");
-//				roleRepository.save(newCSKH);
-//			}
-//
-//			List<RoleModel> userRole = roleRepository.findByTitleCode("KTV");
-//			if (userRole.size() == 0) {
-//				RoleModel newEmployee = new RoleModel("KTV");
-//				roleRepository.save(newEmployee);
-//			}
-//
-//			List<RoleModel> viewRole = roleRepository.findByTitleCode("VIEW");
-//			if (viewRole.size() == 0) {
-//				RoleModel newEmployee = new RoleModel("VIEW");
-//				roleRepository.save(newEmployee);
-//			}
+			List<RoleModel> adminRole = roleRepository.findByTitleCode("ADMIN");
+			if (adminRole.size() == 0) {
+				RoleModel newAdmin = new RoleModel("ADMIN");
+				roleRepository.save(newAdmin);
+			}
+
+			List<RoleModel> userRole = roleRepository.findByTitleCode("USER");
+			if (userRole.size() == 0) {
+				RoleModel newCSKH = new RoleModel("USER");
+				roleRepository.save(newCSKH);
+			}
 
 			Optional<AccountModel> adminAccount = accountRepository.findByUsername("admin");
 			if (!adminAccount.isPresent()) {
@@ -70,28 +64,6 @@ public class ThuvienApplication extends SpringBootServletInitializer {
 				newAdminAccount.setPassword(passwordEncoder.encode("123456"));
 				accountRepository.save(newAdminAccount);
 			}
-
-//			Optional<AccountModel> cskhAccount = accountRepository.findByUsername("cskh");
-//			if (!cskhAccount.isPresent()) {
-//				AccountModel newCSKHAccount = new AccountModel();
-//				newCSKHAccount.setUsername("cskh");
-//				newCSKHAccount.setPassword(bCryptPasswordEncoder.encode("12345678"));
-//				newCSKHAccount.setName("CSKH");
-//				newCSKHAccount.setRoleId(roleRepository.findByTitleRole("CSKH").get().getId());
-//				accountRepository.save(newCSKHAccount);
-//			}
-//
-//			Optional<AccountModel> viewhAccount = accountRepository.findByUsername("view");
-//			if (!viewhAccount.isPresent()) {
-//				AccountModel newCSKHAccount = new AccountModel();
-//				newCSKHAccount.setUsername("view");
-//				newCSKHAccount.setPassword(bCryptPasswordEncoder.encode("12345678"));
-//				newCSKHAccount.setName("VIEW");
-//				newCSKHAccount.setRoleId(roleRepository.findByTitleRole("VIEW").get().getId());
-//				accountRepository.save(newCSKHAccount);
-//			}
-//
-//			excelService.initUploadFile();
 		};
 	}
 }

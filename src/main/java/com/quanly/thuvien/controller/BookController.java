@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,7 @@ public class BookController {
 	@Autowired
 	private BookRepository bookRepository;
 	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@GetMapping("")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
@@ -58,7 +60,7 @@ public class BookController {
 		}
 	};
 	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@PostMapping("/{id}")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> create(@RequestBody BookModel book) {
 		Map<String, Object> response = new HashMap<>();
@@ -75,7 +77,7 @@ public class BookController {
 		}
 	};
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
 		Map<String, Object> response = new HashMap<>();
@@ -91,7 +93,7 @@ public class BookController {
 		}
 	};
 	
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> update(@RequestBody BookModel book, @PathVariable(value = "id") String id) {
 		Map<String, Object> response = new HashMap<>();
@@ -108,7 +110,7 @@ public class BookController {
 		}
 	};
 	
-	@RequestMapping(value = "/getall", method = RequestMethod.GET)
+	@GetMapping("/getall")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> getAllBook() {
 		Map<String, Object> response = new HashMap<>();
