@@ -12,10 +12,17 @@ public class AccountModel {
 	
 	@Field (value = "username")
 	private String username;
-	
+
+	@Field (value = "fullname")
+	private String fullname;
 	@Field (value = "password")	
 	private String password;
-	
+
+	@Field (value = "phoneNumber")
+	private String phoneNumber;
+
+	@Field (value = "address")
+	private String address;
 	@Field(value = "roleId")
 	private String roleId;
 
@@ -50,6 +57,28 @@ public class AccountModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }

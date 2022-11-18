@@ -2,12 +2,16 @@ package com.quanly.thuvien.service;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import com.quanly.thuvien.repository.FileRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +26,7 @@ import com.quanly.thuvien.model.CategoryModel;
 import com.quanly.thuvien.repository.AuthorRepository;
 import com.quanly.thuvien.repository.BookRepository;
 import com.quanly.thuvien.repository.CategoryRepository;
-
+import org.springframework.web.multipart.MultipartFile;
 @Service
 public class BookService {
 	
@@ -34,6 +38,8 @@ public class BookService {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	public FileRepository fileRepository;
+
 	
 	public BookModel create(BookModel book) {
 		Optional<AuthorModel> opAuthor = authorRepository.findById(book.getAuthorId());
@@ -123,6 +129,23 @@ public class BookService {
 		dto.setCategoryTitle(opCate.get().getTitle());
 		BeanUtils.copyProperties(book, dto);
 		return dto;
+	};
+
+	public String uploadPhoto(MultipartFile file, String title) throws Exception {
+
+		if (!file.getContentType().startsWith("image")) {
+			throw new EntityNotFoundException("Upload file is not image!");
+		}
+		String fileName = "";
+		Date date = new Date();
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		String month = localDate.getMonthValue() >= 10 ? String.valueOf(localDate.getMonthValue())
+				: ("0" + localDate.getMonthValue());
+		String year = String.valueOf(localDate.getYear());
+		String day = localDate.getDayOfMonth() >= 10 ? String.valueOf(localDate.getDayOfMonth())
+				: ("0" + (localDate.getDayOfMonth()));
+		fileName = year.concat(month).concat(day).concat("-").concat(file.getOriginalFilename());
+		return fileRepository.saveOrUpdate(file, fileName);
 	};
 
 }

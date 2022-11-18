@@ -6,9 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.quanly.thuvien.model.AccountModel;
@@ -17,8 +20,14 @@ import com.quanly.thuvien.repository.AccountRepository;
 import com.quanly.thuvien.repository.RoleRepository;
 
 @SpringBootApplication
+@Configuration
+@EnableAutoConfiguration
 public class ThuvienApplication extends SpringBootServletInitializer {
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(ThuvienApplication.class);
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(ThuvienApplication.class, args);
 	}
@@ -62,6 +71,10 @@ public class ThuvienApplication extends SpringBootServletInitializer {
 				AccountModel newAdminAccount = new AccountModel();
 				newAdminAccount.setUsername("admin");
 				newAdminAccount.setPassword(passwordEncoder.encode("123456"));
+				newAdminAccount.setFullname("ADMIN");
+				newAdminAccount.setRoleId(roleRepository.findByTitleRole("ADMIN").get().getId());
+				newAdminAccount.setPhoneNumber("Không xác định");
+				newAdminAccount.setAddress("Không xác định");
 				accountRepository.save(newAdminAccount);
 			}
 		};

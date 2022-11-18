@@ -12,7 +12,7 @@ import com.quanly.thuvien.model.AccountModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 	
 	AccountModel account;

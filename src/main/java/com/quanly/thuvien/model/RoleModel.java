@@ -13,8 +13,8 @@ public class RoleModel {
 	@Field(value = "title")
 	private String title;
 
-	public RoleModel(String string) {
-		// TODO Auto-generated constructor stub
+	public RoleModel(String title) {
+		this.title = title;
 	}
 
 	public String getId() {

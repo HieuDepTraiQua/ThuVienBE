@@ -28,6 +28,7 @@ import com.quanly.thuvien.model.BookModel;
 import com.quanly.thuvien.model.CustomerModel;
 import com.quanly.thuvien.repository.BookRepository;
 import com.quanly.thuvien.service.BookService;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/thuvien/book")
@@ -126,5 +127,22 @@ public class BookController {
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 	};
+	@PostMapping("/uploads")
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	public ResponseEntity<?> uploadImage(@RequestBody MultipartFile files) {
+		Map<String, Object> response = new HashMap<String, Object>();
+		try {
+			String filePath = bookService.uploadPhoto(files, null);
+			response.put("data", filePath);
+			response.put("success", true);
+			response.put("message", "Upload file successfuly !");
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", e);
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+	};
+
 	
 }
