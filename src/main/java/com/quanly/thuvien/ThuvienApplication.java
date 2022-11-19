@@ -77,6 +77,18 @@ public class ThuvienApplication extends SpringBootServletInitializer {
 				newAdminAccount.setAddress("Không xác định");
 				accountRepository.save(newAdminAccount);
 			}
+			
+			Optional<AccountModel> userAccount = accountRepository.findByUsername("user");
+			if (!adminAccount.isPresent()) {
+				AccountModel newUserAccount = new AccountModel();
+				newUserAccount.setUsername("user");
+				newUserAccount.setPassword(passwordEncoder.encode("123456"));
+				newUserAccount.setFullname("USER");
+				newUserAccount.setRoleId(roleRepository.findByTitleRole("USER").get().getId());
+				newUserAccount.setPhoneNumber("Không xác định");
+				newUserAccount.setAddress("Không xác định");
+				accountRepository.save(newUserAccount);
+			}
 		};
 	}
 }

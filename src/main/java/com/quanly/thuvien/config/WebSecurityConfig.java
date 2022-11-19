@@ -60,7 +60,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/auth/login").permitAll().anyRequest().authenticated();
+				.antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+				.antMatchers(HttpMethod.DELETE).hasAnyAuthority("ADMIN")
+				.antMatchers(HttpMethod.POST).hasAnyAuthority("ADMIN")
+				.antMatchers(HttpMethod.PUT).hasAnyAuthority("ADMIN")
+				.antMatchers("/auth/").permitAll().anyRequest().authenticated();
 
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
@@ -70,4 +74,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/uploads/**");
 	}
+	
+	
 }

@@ -54,17 +54,4 @@ public class AuthController {
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 	};
-    
-//    @PostMapping("/login")
-//    public LoginResponse authenticateUser(@RequestBody @Valid LoginRequest loginRequest) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        loginRequest.getUsername(),
-//                        loginRequest.getPassword()
-//                )
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
-//        return new LoginResponse(jwt);
-//    }
 }

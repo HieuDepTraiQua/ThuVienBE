@@ -1,13 +1,18 @@
 package com.quanly.thuvien.controller;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,14 +26,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.quanly.thuvien.dto.BookDTO;
 import com.quanly.thuvien.model.BookModel;
-import com.quanly.thuvien.model.CustomerModel;
-import com.quanly.thuvien.repository.BookRepository;
+import com.quanly.thuvien.reponse.ResponseMessage;
 import com.quanly.thuvien.service.BookService;
-import org.springframework.web.multipart.MultipartFile;
+import com.quanly.thuvien.service.PhotoService;
 
 @RestController
 @RequestMapping("/api/thuvien/book")
@@ -38,7 +44,9 @@ public class BookController {
 	private BookService bookService;
 	
 	@Autowired
-	private BookRepository bookRepository;
+	private PhotoService photoService;
+	
+	private final Path root = Paths.get("uploads");
 	
 	@GetMapping("")
 	@CrossOrigin(origins = "*", maxAge = 3600)
@@ -61,7 +69,7 @@ public class BookController {
 		}
 	};
 	
-	@PostMapping("/{id}")
+	@PostMapping()
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> create(@RequestBody BookModel book) {
 		Map<String, Object> response = new HashMap<>();
@@ -127,22 +135,64 @@ public class BookController {
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 	};
-	@PostMapping("/uploads")
-	@CrossOrigin(origins = "*", maxAge = 3600)
-	public ResponseEntity<?> uploadImage(@RequestBody MultipartFile files) {
-		Map<String, Object> response = new HashMap<String, Object>();
-		try {
-			String filePath = bookService.uploadPhoto(files, null);
-			response.put("data", filePath);
-			response.put("success", true);
-			response.put("message", "Upload file successfuly !");
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (Exception e) {
-			response.put("success", false);
-			response.put("message", e);
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-		}
-	};
-
+	
+//	@PostMapping("/uploads")
+//	@CrossOrigin(origins = "*", maxAge = 3600)
+//	public ResponseEntity<?> uploadImage(@RequestParam("files") MultipartFile files) {
+//		Map<String, Object> response = new HashMap<String, Object>();
+//		try {
+//			String filePath = bookService.uploadPhoto(files, null);
+//			response.put("data", filePath);
+//			response.put("success", true);
+//			response.put("message", "Upload file successfuly !");
+//			return new ResponseEntity<>(response, HttpStatus.OK);
+//		} catch (Exception e) {
+//			response.put("success", false);
+//			response.put("message", e);
+//			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//		}
+//	};
+	
+	@PostMapping("/upload")
+	  public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+	    String message = "";
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	      photoService.save(file);
+	      Path img = root.resolve(file.getOriginalFilename());
+	      Resource resource = new UrlResource(img.toUri());
+	      String rs = resource.toString();
+	      message = "Uploaded the file successfully: " + file.getOriginalFilename();
+	      response.put("success", true);
+	      response.put("message", message);
+	      response.put("url", rs);
+	      return new ResponseEntity<>(response, HttpStatus.OK);
+//	      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+	    } catch (Exception e) {
+	      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+	      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+	    }
+	  }
+	
+//	  @GetMapping("/files")
+//	  public ResponseEntity<List<BookModel>> getListFiles() {
+//	    List<BookModel> fileInfos = photoService.loadAll().map(path -> {
+////	      String filename = path.getFileName().toString();
+//	      String url = MvcUriComponentsBuilder
+//	          .fromMethodName(FilesController.class, "getFile", path.getFileName().toString()).build().toString();
+//
+//	      return new FileInfo(filename, url);
+//	    }).collect(Collectors.toList());
+//
+//	    return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
+//	  }
+	
+	  @GetMapping("/files/{filename:.+}")
+	  @ResponseBody
+	  public ResponseEntity<Resource> getFile(@PathVariable(value = "filename") String filename) {
+	    Resource file = photoService.load(filename);
+	    return ResponseEntity.ok()
+	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+	  }
 	
 }

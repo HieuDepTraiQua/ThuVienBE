@@ -6,15 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quanly.thuvien.model.CategoryModel;
-import com.quanly.thuvien.repository.CategoryRepository;
 import com.quanly.thuvien.service.CategoryService;
 
 @RestController
@@ -34,11 +32,7 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@Autowired
-	private CategoryRepository categoryRepository;
-	
-	
-	@RequestMapping(value = "/getall", method = RequestMethod.GET)
+	@GetMapping("/getall")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> getAllProduct() {
 		Map<String, Object> response = new HashMap<>();
@@ -55,7 +49,7 @@ public class CategoryController {
 		}
 	};
 	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@PostMapping()
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> create(@RequestBody CategoryModel category) {
 		Map<String, Object> response = new HashMap<>();
@@ -72,7 +66,7 @@ public class CategoryController {
 		}
 	};
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
 		Map<String, Object> response = new HashMap<>();
@@ -88,7 +82,7 @@ public class CategoryController {
 		}
 	};
 	
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> update(@RequestBody CategoryModel category, @PathVariable(value = "id") String id) {
 		Map<String, Object> response = new HashMap<>();

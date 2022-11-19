@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quanly.thuvien.model.AuthorModel;
-import com.quanly.thuvien.model.CategoryModel;
 import com.quanly.thuvien.repository.AuthorRepository;
 import com.quanly.thuvien.service.AuthorService;
 
@@ -53,7 +54,7 @@ public class AuthorController {
 		}
 	};
 	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@PostMapping()
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> create(@RequestBody AuthorModel author) {
 		Map<String, Object> response = new HashMap<>();
@@ -70,7 +71,7 @@ public class AuthorController {
 		}
 	};
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
 		Map<String, Object> response = new HashMap<>();
@@ -86,7 +87,7 @@ public class AuthorController {
 		}
 	};
 	
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> update(@RequestBody AuthorModel category, @PathVariable(value = "id") String id) {
 		Map<String, Object> response = new HashMap<>();
@@ -103,7 +104,7 @@ public class AuthorController {
 		}
 	};
 	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@GetMapping()
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
