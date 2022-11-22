@@ -34,6 +34,10 @@ public class BookService {
 	private CategoryRepository categoryRepository;
 
 	public BookModel create(BookModel book) {
+		Optional<BookModel> opBook  = bookRepository.findByName(book.getNameBook());
+		if (opBook.isPresent()) {
+			throw new EntityNotFoundException("Book name is exist!");
+		}
 		Optional<AuthorModel> opAuthor = authorRepository.findById(book.getAuthorId());
 		if (!opAuthor.isPresent()) {
 			throw new EntityNotFoundException("Author Id not found!");

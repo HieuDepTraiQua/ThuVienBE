@@ -120,7 +120,7 @@ public class CategoryController {
 //		}
 //	};
 	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@GetMapping("")
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size,
