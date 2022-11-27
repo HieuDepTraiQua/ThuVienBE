@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -29,9 +30,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.quanly.thuvien.dto.BookDTO;
 import com.quanly.thuvien.model.BookModel;
+import com.quanly.thuvien.model.FileInfo;
 import com.quanly.thuvien.reponse.ResponseMessage;
 import com.quanly.thuvien.service.BookService;
 import com.quanly.thuvien.service.PhotoService;
@@ -159,13 +163,12 @@ public class BookController {
 	    Map<String, Object> response = new HashMap<>();
 	    try {
 	      photoService.save(file);
-	      Path img = root.resolve(file.getOriginalFilename());
-	      Resource resource = new UrlResource(img.toUri());
-	      String rs = resource.toString();
+	      String url = MvcUriComponentsBuilder
+		          .fromMethodName(BookController.class, "getFile", file.getOriginalFilename().toString()).build().toString();
 	      message = "Uploaded the file successfully: " + file.getOriginalFilename();
 	      response.put("success", true);
 	      response.put("message", message);
-	      response.put("url", rs);
+	      response.put("url", url);
 	      return new ResponseEntity<>(response, HttpStatus.OK);
 //	      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
 	    } catch (Exception e) {
@@ -174,18 +177,18 @@ public class BookController {
 	    }
 	  }
 	
-//	  @GetMapping("/files")
-//	  public ResponseEntity<List<BookModel>> getListFiles() {
-//	    List<BookModel> fileInfos = photoService.loadAll().map(path -> {
-////	      String filename = path.getFileName().toString();
-//	      String url = MvcUriComponentsBuilder
-//	          .fromMethodName(FilesController.class, "getFile", path.getFileName().toString()).build().toString();
-//
-//	      return new FileInfo(filename, url);
-//	    }).collect(Collectors.toList());
-//
-//	    return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
-//	  }
+	  @GetMapping("/files")
+	  public ResponseEntity<List<FileInfo>> getListFiles() {
+	    List<FileInfo> fileInfos = photoService.loadAll().map(path -> {
+	      String filename = path.getFileName().toString();
+	      String url = MvcUriComponentsBuilder
+	          .fromMethodName(BookController.class, "getFile", path.getFileName().toString()).build().toString();
+
+	      return new FileInfo(filename, url);
+	    }).collect(Collectors.toList());
+
+	    return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
+	  }
 	
 	  @GetMapping("/files/{filename:.+}")
 	  @ResponseBody
