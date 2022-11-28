@@ -140,22 +140,22 @@ public class BookController {
 		}
 	};
 	
-//	@PostMapping("/uploads")
-//	@CrossOrigin(origins = "*", maxAge = 3600)
-//	public ResponseEntity<?> uploadImage(@RequestParam("files") MultipartFile files) {
-//		Map<String, Object> response = new HashMap<String, Object>();
-//		try {
-//			String filePath = bookService.uploadPhoto(files, null);
-//			response.put("data", filePath);
-//			response.put("success", true);
-//			response.put("message", "Upload file successfuly !");
-//			return new ResponseEntity<>(response, HttpStatus.OK);
-//		} catch (Exception e) {
-//			response.put("success", false);
-//			response.put("message", e);
-//			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//		}
-//	};
+	@PostMapping("/uploads")
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	public ResponseEntity<?> uploadImage(@RequestParam("files") MultipartFile files) {
+		Map<String, Object> response = new HashMap<String, Object>();
+		try {
+			String filePath = bookService.uploadPhoto(files, null);
+			response.put("data", filePath);
+			response.put("success", true);
+			response.put("message", "Upload file successfuly !");
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", e);
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+	};
 	
 	@PostMapping("/upload")
 	  public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
