@@ -12,5 +12,8 @@ import com.quanly.thuvien.model.AccountModel;
 public interface AccountRepository extends MongoRepository<AccountModel, String>{
 	@Query(value = "{'username': ?0}")
 	Optional<AccountModel> findByUsername(String username);
+	@Query(value = "{'phoneNumber': ?0}")
+	Optional<AccountModel> findByPhoneNumber(String phoneNumber);
+
 
 }

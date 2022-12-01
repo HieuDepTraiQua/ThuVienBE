@@ -176,7 +176,7 @@ public class BookController {
 	      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
 	    }
 	  }
-	
+
 	  @GetMapping("/files")
 	  public ResponseEntity<List<FileInfo>> getListFiles() {
 	    List<FileInfo> fileInfos = photoService.loadAll().map(path -> {
@@ -189,7 +189,7 @@ public class BookController {
 
 	    return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
 	  }
-	
+
 	  @GetMapping("/files/{filename:.+}")
 	  @ResponseBody
 	  public ResponseEntity<Resource> getFile(@PathVariable(value = "filename") String filename) {

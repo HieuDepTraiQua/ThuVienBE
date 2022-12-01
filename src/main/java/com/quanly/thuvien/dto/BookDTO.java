@@ -15,6 +15,8 @@ public class BookDTO {
 
 	 private String publishYear;
 
+	private String image;
+
 	public String getId() {
 		return id;
 	}
@@ -70,7 +72,12 @@ public class BookDTO {
 	public void setPublishYear(String publishYear) {
 		this.publishYear = publishYear;
 	}
-	 
-	 
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 }

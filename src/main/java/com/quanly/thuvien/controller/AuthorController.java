@@ -39,7 +39,7 @@ public class AuthorController {
 	
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@CrossOrigin(origins = "*", maxAge = 3600)
-	public ResponseEntity<?> getAllProduct() {
+	public ResponseEntity<?> getAll() {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			List<AuthorModel> data = authorService.getAll();
