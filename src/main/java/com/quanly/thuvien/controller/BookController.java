@@ -140,13 +140,14 @@ public class BookController {
 		}
 	};
 	
-	@PostMapping("/uploads")
+	@PostMapping("/upload")
 	@CrossOrigin(origins = "*", maxAge = 3600)
-	public ResponseEntity<?> uploadImage(@RequestParam("files") MultipartFile files) {
+	public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile files) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		try {
 			String filePath = bookService.uploadPhoto(files, null);
-			response.put("data", filePath);
+			String rs = "http://localhost:1234/" + filePath;
+			response.put("data", rs);
 			response.put("success", true);
 			response.put("message", "Upload file successfuly !");
 			return new ResponseEntity<>(response, HttpStatus.OK);
@@ -157,45 +158,45 @@ public class BookController {
 		}
 	};
 	
-	@PostMapping("/upload")
-	  public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
-	    String message = "";
-	    Map<String, Object> response = new HashMap<>();
-	    try {
-	      photoService.save(file);
-	      String url = MvcUriComponentsBuilder
-		          .fromMethodName(BookController.class, "getFile", file.getOriginalFilename().toString()).build().toString();
-	      message = "Uploaded the file successfully: " + file.getOriginalFilename();
-	      response.put("success", true);
-	      response.put("message", message);
-	      response.put("url", url);
-	      return new ResponseEntity<>(response, HttpStatus.OK);
-//	      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-	    } catch (Exception e) {
-	      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-	      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-	    }
-	  }
-
-	  @GetMapping("/files")
-	  public ResponseEntity<List<FileInfo>> getListFiles() {
-	    List<FileInfo> fileInfos = photoService.loadAll().map(path -> {
-	      String filename = path.getFileName().toString();
-	      String url = MvcUriComponentsBuilder
-	          .fromMethodName(BookController.class, "getFile", path.getFileName().toString()).build().toString();
-
-	      return new FileInfo(filename, url);
-	    }).collect(Collectors.toList());
-
-	    return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
-	  }
-
-	  @GetMapping("/files/{filename:.+}")
-	  @ResponseBody
-	  public ResponseEntity<Resource> getFile(@PathVariable(value = "filename") String filename) {
-	    Resource file = photoService.load(filename);
-	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-	  }
+//	@PostMapping("/upload")
+//	  public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+//	    String message = "";
+//	    Map<String, Object> response = new HashMap<>();
+//	    try {
+//	      photoService.save(file);
+//	      String url = MvcUriComponentsBuilder
+//		          .fromMethodName(BookController.class, "getFile", file.getOriginalFilename().toString()).build().toString();
+//	      message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//	      response.put("success", true);
+//	      response.put("message", message);
+//	      response.put("url", url);
+//	      return new ResponseEntity<>(response, HttpStatus.OK);
+////	      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+//	    } catch (Exception e) {
+//	      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//	      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+//	    }
+//	  }
+//
+//	  @GetMapping("/files")
+//	  public ResponseEntity<List<FileInfo>> getListFiles() {
+//	    List<FileInfo> fileInfos = photoService.loadAll().map(path -> {
+//	      String filename = path.getFileName().toString();
+//	      String url = MvcUriComponentsBuilder
+//	          .fromMethodName(BookController.class, "getFile", path.getFileName().toString()).build().toString();
+//
+//	      return new FileInfo(filename, url);
+//	    }).collect(Collectors.toList());
+//
+//	    return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
+//	  }
+//
+//	  @GetMapping("/files/{filename:.+}")
+//	  @ResponseBody
+//	  public ResponseEntity<Resource> getFile(@PathVariable(value = "filename") String filename) {
+//	    Resource file = photoService.load(filename);
+//	    return ResponseEntity.ok()
+//	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+//	  }
 	
 }

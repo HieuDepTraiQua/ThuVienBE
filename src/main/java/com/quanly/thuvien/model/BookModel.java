@@ -13,14 +13,20 @@ public class BookModel {
 	@Field(value = "nameBook")
 	private String nameBook;
 
-	@Field(value = "authorId")
-	private String authorId;
+	@Field(value = "author")
+	private String author;
 
 	@Field(value = "categoryId")
 	private String categoryId;
 
 	@Field(value = "publishYear")
 	private String publishYear;
+
+	@Field(value = "pageOfBook")
+	private String pageOfBook;
+
+	@Field(value = "description")
+	private String description;
 
 	@Field(value = "image")
 	private String image;
@@ -41,12 +47,12 @@ public class BookModel {
 		this.nameBook = nameBook;
 	}
 
-	public String getAuthorId() {
-		return authorId;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setAuthorId(String authorId) {
-		this.authorId = authorId;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public String getCategoryId() {
@@ -65,6 +71,22 @@ public class BookModel {
 		this.publishYear = publishYear;
 	}
 
+	public String getPageOfBook() {
+		return pageOfBook;
+	}
+
+	public void setPageOfBook(String pageOfBook) {
+		this.pageOfBook = pageOfBook;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getImage() {
 		return image;
 	}
@@ -72,5 +94,4 @@ public class BookModel {
 	public void setImage(String image) {
 		this.image = image;
 	}
-
 }

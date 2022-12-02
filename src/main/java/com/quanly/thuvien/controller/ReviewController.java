@@ -1,12 +1,9 @@
 package com.quanly.thuvien.controller;
 
-import com.quanly.thuvien.dto.AccountDTO;
-import com.quanly.thuvien.dto.BookDTO;
-import com.quanly.thuvien.model.AccountModel;
+import com.quanly.thuvien.dto.ReviewDTO;
 import com.quanly.thuvien.model.AuthorModel;
-import com.quanly.thuvien.model.BookModel;
-import com.quanly.thuvien.model.RoleModel;
-import com.quanly.thuvien.service.AccountService;
+import com.quanly.thuvien.model.ReviewModel;
+import com.quanly.thuvien.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,24 +18,20 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/thuvien/account")
+@RequestMapping("/api/thuvien/review")
 @Controller
-public class AccountController {
+public class ReviewController {
 
     @Autowired
-    private AccountService accountService;
+    private ReviewService reviewService;
 
-    @GetMapping("")
+    @GetMapping("/getall")
     @CrossOrigin(origins = "*", maxAge = 3600)
-    public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<?> getAll() {
         Map<String, Object> response = new HashMap<>();
         try {
-            Pageable paging = PageRequest.of(page, size);
-            Page<AccountDTO> data = accountService.get(paging);
-            response.put("data", data.getContent());
-            response.put("totalRecord", data.getTotalElements());
-            response.put("totalPage", data.getTotalPages());
+            List<ReviewModel> data = reviewService.getAll();
+            response.put("data", data);
             response.put("success", true);
             response.put("message", "Ok");
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -51,10 +44,10 @@ public class AccountController {
 
     @PostMapping()
     @CrossOrigin(origins = "*", maxAge = 3600)
-    public ResponseEntity<?> create(@RequestBody AccountModel account) {
+    public ResponseEntity<?> create(@RequestBody ReviewModel review) {
         Map<String, Object> response = new HashMap<>();
         try {
-            AccountModel data = accountService.create(account);
+            ReviewModel data = reviewService.create(review);
             response.put("data", data);
             response.put("success", true);
             response.put("message", "Ok");
@@ -71,7 +64,7 @@ public class AccountController {
     public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
         Map<String, Object> response = new HashMap<>();
         try {
-            accountService.deleteById(id);
+            reviewService.deleteById(id);
             response.put("success", true);
             response.put("message", "Delete successfully !");
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -81,12 +74,13 @@ public class AccountController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     };
+
     @PutMapping("/{id}")
     @CrossOrigin(origins = "*", maxAge = 3600)
-    public ResponseEntity<?> update(@RequestBody AccountModel account, @PathVariable(value = "id") String id) {
+    public ResponseEntity<?> update(@RequestBody ReviewModel category, @PathVariable(value = "id") String id) {
         Map<String, Object> response = new HashMap<>();
         try {
-            AccountModel data = accountService.update(account, id);
+            ReviewModel data = reviewService.update(category, id);
             response.put("data", data);
             response.put("success", true);
             response.put("message", "Update successfully !");
@@ -98,13 +92,17 @@ public class AccountController {
         }
     };
 
-    @RequestMapping(value = "/getrole", method = RequestMethod.GET)
+    @GetMapping()
     @CrossOrigin(origins = "*", maxAge = 3600)
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size) {
         Map<String, Object> response = new HashMap<>();
         try {
-            List<RoleModel> data = accountService.getAllRole();
-            response.put("data", data);
+            Pageable paging = PageRequest.of(page, size);
+            Page<ReviewDTO> data = reviewService.get(paging);
+            response.put("data", data.getContent());
+            response.put("totalRecord", data.getTotalElements());
+            response.put("totalPage", data.getTotalPages());
             response.put("success", true);
             response.put("message", "Ok");
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -114,23 +112,5 @@ public class AccountController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     };
-
-//    @PutMapping("/change-password/{id}")
-//    @CrossOrigin(origins = "*", maxAge = 3600)
-//    public ResponseEntity<?> changePassword(@PathVariable(value = "id") String id, @RequestBody AccountModel model) {
-//        Map<String, Object> response = new HashMap<>();
-//        try {
-//            AccountModel data = accountService.changePassword(model, id);
-//            response.put("data", data);
-//            response.put("success", true);
-//            response.put("message", "Update password successfully !");
-//            return new ResponseEntity<>(response, HttpStatus.OK);
-//        } catch (Exception e) {
-//            response.put("success", false);
-//            response.put("message", e.getMessage());
-//            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//        }
-//    };
-
 
 }

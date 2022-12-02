@@ -8,14 +8,16 @@ public class BookDTO {
 	 private String categoryId;
 	 
 	 private String categoryTitle;
-
-	 private String authorId;
 	 
-	 private String authorName;
+	 private String author;
 
 	 private String publishYear;
 
 	private String image;
+
+	private String pageOfBook;
+
+	private String description;
 
 	public String getId() {
 		return id;
@@ -49,20 +51,12 @@ public class BookDTO {
 		this.categoryTitle = categoryTitle;
 	}
 
-	public String getAuthorId() {
-		return authorId;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setAuthorId(String authorId) {
-		this.authorId = authorId;
-	}
-
-	public String getAuthorName() {
-		return authorName;
-	}
-
-	public void setAuthorName(String authorName) {
-		this.authorName = authorName;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public String getPublishYear() {
@@ -79,5 +73,21 @@ public class BookDTO {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getPageOfBook() {
+		return pageOfBook;
+	}
+
+	public void setPageOfBook(String pageOfBook) {
+		this.pageOfBook = pageOfBook;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

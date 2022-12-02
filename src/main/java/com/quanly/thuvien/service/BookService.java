@@ -50,10 +50,6 @@ public class BookService {
 		if (opBook.isPresent()) {
 			throw new EntityNotFoundException("Book name is exist!");
 		}
-		Optional<AuthorModel> opAuthor = authorRepository.findById(book.getAuthorId());
-		if (!opAuthor.isPresent()) {
-			throw new EntityNotFoundException("Author Id not found!");
-		}
 		Optional<CategoryModel> opCate = categoryRepository.findById(book.getCategoryId());
 		if (!opCate.isPresent()) {
 			throw new EntityNotFoundException("Category Id not found!");
@@ -83,14 +79,20 @@ public class BookService {
 			if (book.getNameBook() == null || book.getNameBook().isEmpty()) {
 				book.setNameBook(optional.get().getNameBook());
 			}
-			if (book.getAuthorId() == null || book.getAuthorId().isEmpty()) {
-				book.setAuthorId(optional.get().getAuthorId());
+			if (book.getAuthor() == null || book.getAuthor().isEmpty()) {
+				book.setAuthor(optional.get().getAuthor());
 			}
 			if (book.getCategoryId() == null || book.getCategoryId().isEmpty()) {
 				book.setCategoryId(optional.get().getCategoryId());
 			}
 			if (book.getPublishYear() == null || book.getPublishYear().isEmpty()) {
 				book.setPublishYear(optional.get().getPublishYear());
+			}
+			if (book.getPageOfBook() == null || book.getPageOfBook().isEmpty()) {
+				book.setPageOfBook(optional.get().getPageOfBook());
+			}
+			if (book.getDescription() == null || book.getDescription().isEmpty()) {
+				book.setDescription(optional.get().getDescription());
 			}
 			return bookRepository.save(book);
 		}
@@ -104,18 +106,7 @@ public class BookService {
 	public List<BookDTO> getListBookDto(List<BookModel> listBook) {
 		List<BookDTO> listDto = new ArrayList<>();
 		for (BookModel book : listBook) {
-			BookDTO dto = new BookDTO();
-			Optional<AuthorModel> opAuthor = authorRepository.findById(book.getAuthorId());
-			if (!opAuthor.isPresent()) {
-				throw new EntityNotFoundException("Author Id not found!");
-			}
-			Optional<CategoryModel> opCate = categoryRepository.findById(book.getCategoryId());
-			if (!opCate.isPresent()) {
-				throw new EntityNotFoundException("Category Id not found!");
-			}
-			dto.setAuthorName(opAuthor.get().getName());
-			dto.setCategoryTitle(opCate.get().getTitle());
-			BeanUtils.copyProperties(book, dto);
+			BookDTO dto = getBookDto(book);
 			listDto.add(dto);
 		}
 		return listDto;
@@ -123,15 +114,10 @@ public class BookService {
 
 	public BookDTO getBookDto(BookModel book) {
 		BookDTO dto = new BookDTO();
-		Optional<AuthorModel> opAuthor = authorRepository.findById(book.getAuthorId());
-		if (!opAuthor.isPresent()) {
-			throw new EntityNotFoundException("Author Id not found!");
-		}
 		Optional<CategoryModel> opCate = categoryRepository.findById(book.getCategoryId());
 		if (!opCate.isPresent()) {
 			throw new EntityNotFoundException("Category Id not found!");
 		}
-		dto.setAuthorName(opAuthor.get().getName());
 		dto.setCategoryTitle(opCate.get().getTitle());
 		BeanUtils.copyProperties(book, dto);
 		return dto;
