@@ -2,8 +2,10 @@ package com.quanly.thuvien.service;
 
 import com.quanly.thuvien.dto.ReviewDTO;
 import com.quanly.thuvien.model.AccountModel;
+import com.quanly.thuvien.model.BookModel;
 import com.quanly.thuvien.model.ReviewModel;
 import com.quanly.thuvien.repository.AccountRepository;
+import com.quanly.thuvien.repository.BookRepository;
 import com.quanly.thuvien.repository.ReviewRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class ReviewService {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     public List<ReviewModel> getAll() {
         return reviewRepository.findAll();
@@ -48,6 +52,9 @@ public class ReviewService {
             }
             if (review.getUserId() == null || review.getUserId().isEmpty()) {
                 review.setUserId(optional.get().getUserId());
+            }
+            if (review.getBookId() == null || review.getBookId().isEmpty()) {
+                review.setBookId(optional.get().getBookId());
             }
             return reviewRepository.save(review);
         }
@@ -73,7 +80,12 @@ public class ReviewService {
         if (!opAccount.isPresent()) {
             throw new EntityNotFoundException("User Id not found!");
         }
+        Optional<BookModel> opBook = bookRepository.findById(object.getBookId());
+        if (!opBook.isPresent()) {
+            throw new EntityNotFoundException("Book Id not found!");
+        }
         dto.setNameOfCustomer(opAccount.get().getFullname());
+        dto.setNameBook(opBook.get().getNameBook());
         BeanUtils.copyProperties(object, dto);
         return dto;
     };

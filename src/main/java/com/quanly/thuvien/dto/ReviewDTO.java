@@ -7,6 +7,10 @@ public class ReviewDTO {
     private String vote;
     private String detail;
 
+    private String bookId;
+
+    private String nameBook;
+
     public String getId() {
         return id;
     }
@@ -45,5 +49,21 @@ public class ReviewDTO {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getNameBook() {
+        return nameBook;
+    }
+
+    public void setNameBook(String nameBook) {
+        this.nameBook = nameBook;
     }
 }
