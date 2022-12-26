@@ -94,6 +94,12 @@ public class BookService {
 			if (book.getDescription() == null || book.getDescription().isEmpty()) {
 				book.setDescription(optional.get().getDescription());
 			}
+			if (book.getPrice() == null || book.getPrice().isEmpty()) {
+				book.setPrice(optional.get().getPrice());
+			}
+			if (book.getRemainingStock() == null || book.getRemainingStock().isEmpty()) {
+				book.setRemainingStock(optional.get().getRemainingStock());
+			}
 			return bookRepository.save(book);
 		}
 	};

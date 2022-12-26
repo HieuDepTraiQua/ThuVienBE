@@ -31,6 +31,12 @@ public class BookModel {
 	@Field(value = "image")
 	private String image;
 
+	@Field(value = "remainingStock")
+	private String remainingStock;
+
+	@Field(value = "price")
+	private String price;
+
 	public String getId() {
 		return id;
 	}
@@ -93,5 +99,21 @@ public class BookModel {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getRemainingStock() {
+		return remainingStock;
+	}
+
+	public void setRemainingStock(String remainingStock) {
+		this.remainingStock = remainingStock;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
 	}
 }

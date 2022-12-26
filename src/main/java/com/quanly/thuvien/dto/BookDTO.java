@@ -19,6 +19,10 @@ public class BookDTO {
 
 	private String description;
 
+	private String price;
+
+	private String remainingStock;
+
 	public String getId() {
 		return id;
 	}
@@ -89,5 +93,21 @@ public class BookDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public String getRemainingStock() {
+		return remainingStock;
+	}
+
+	public void setRemainingStock(String remainingStock) {
+		this.remainingStock = remainingStock;
 	}
 }
