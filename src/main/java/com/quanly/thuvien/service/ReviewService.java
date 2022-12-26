@@ -53,8 +53,8 @@ public class ReviewService {
             if (review.getUserId() == null || review.getUserId().isEmpty()) {
                 review.setUserId(optional.get().getUserId());
             }
-            if (review.getBookId() == null || review.getBookId().isEmpty()) {
-                review.setBookId(optional.get().getBookId());
+            if (review.getBookName() == null || review.getBookName().isEmpty()) {
+                review.setBookName(optional.get().getBookName());
             }
             return reviewRepository.save(review);
         }
@@ -80,12 +80,12 @@ public class ReviewService {
         if (!opAccount.isPresent()) {
             throw new EntityNotFoundException("User Id not found!");
         }
-        Optional<BookModel> opBook = bookRepository.findById(object.getBookId());
-        if (!opBook.isPresent()) {
-            throw new EntityNotFoundException("Book Id not found!");
-        }
+//        Optional<BookModel> opBook = bookRepository.findById(object.getBookId());
+//        if (!opBook.isPresent()) {
+//            throw new EntityNotFoundException("Book Id not found!");
+//        }
         dto.setNameOfCustomer(opAccount.get().getFullname());
-        dto.setNameBook(opBook.get().getNameBook());
+//        dto.setNameBook(opBook.get().getNameBook());
         BeanUtils.copyProperties(object, dto);
         return dto;
     };

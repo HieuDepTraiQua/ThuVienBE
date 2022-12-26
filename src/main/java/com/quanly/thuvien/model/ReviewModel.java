@@ -19,8 +19,8 @@ public class ReviewModel {
     @Field(value = "detail")
     private String detail;
 
-    @Field(value = "bookId")
-    private String bookId;
+    @Field(value = "bookName")
+    private String bookName;
 
     public String getId() {
         return id;
@@ -54,11 +54,11 @@ public class ReviewModel {
         this.detail = detail;
     }
 
-    public String getBookId() {
-        return bookId;
+    public String getBookName() {
+        return bookName;
     }
 
-    public void setBookId(String bookId) {
-        this.bookId = bookId;
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 }
