@@ -84,6 +84,9 @@ public class AccountService {
         }
     };
 
+    public AccountDTO findAccountById(String id){
+        return getAccountDto(accountRepository.findById(id).get());
+    }
     public AccountDTO getAccountDto(AccountModel account) {
         AccountDTO dto = new AccountDTO();
         Optional<RoleModel> opRole = roleRepository.findById(account.getRoleId());

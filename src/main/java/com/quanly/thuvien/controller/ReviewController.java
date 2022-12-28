@@ -95,11 +95,12 @@ public class ReviewController {
     @GetMapping()
     @CrossOrigin(origins = "*", maxAge = 3600)
     public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "10") int size) {
+                                        @RequestParam(defaultValue = "10") int size,
+                                        @RequestParam() String bookName) {
         Map<String, Object> response = new HashMap<>();
         try {
             Pageable paging = PageRequest.of(page, size);
-            Page<ReviewDTO> data = reviewService.get(paging);
+            Page<ReviewDTO> data = reviewService.get(paging, bookName);
             response.put("data", data.getContent());
             response.put("totalRecord", data.getTotalElements());
             response.put("totalPage", data.getTotalPages());

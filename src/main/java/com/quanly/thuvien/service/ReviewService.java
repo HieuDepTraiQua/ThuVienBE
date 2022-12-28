@@ -68,23 +68,23 @@ public class ReviewService {
             reviewRepository.deleteById(id);
         }
     };
-    public Page<ReviewDTO> get(Pageable pageable) {
-        List<ReviewModel> list = reviewRepository.findAll();
+    public Page<ReviewDTO> get(Pageable pageable, String bookName) {
+        List<ReviewModel> list = reviewRepository.findByNameBook(bookName);
         return new PageImpl<>(getListDto(list), pageable, list.size());
     };
 
 
     public ReviewDTO getObjectDto(ReviewModel object) {
         ReviewDTO dto = new ReviewDTO();
-        Optional<AccountModel> opAccount = accountRepository.findById(object.getUserId());
-        if (!opAccount.isPresent()) {
-            throw new EntityNotFoundException("User Id not found!");
-        }
+//        Optional<AccountModel> opAccount = accountRepository.findById(object.getUserId());
+//        if (!opAccount.isPresent()) {
+//            throw new EntityNotFoundException("User Id not found!");
+//        }
 //        Optional<BookModel> opBook = bookRepository.findById(object.getBookId());
 //        if (!opBook.isPresent()) {
 //            throw new EntityNotFoundException("Book Id not found!");
 //        }
-        dto.setNameOfCustomer(opAccount.get().getFullname());
+//        dto.setNameOfCustomer(opAccount.get().getFullname());
 //        dto.setNameBook(opBook.get().getNameBook());
         BeanUtils.copyProperties(object, dto);
         return dto;

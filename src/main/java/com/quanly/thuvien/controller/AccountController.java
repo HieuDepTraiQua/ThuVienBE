@@ -115,6 +115,23 @@ public class AccountController {
         }
     };
 
+    @GetMapping("/findbyid")
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    public ResponseEntity<?> getAccountById(@RequestParam() String id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            AccountDTO data = accountService.findAccountById(id);
+            response.put("data", data);
+            response.put("success", true);
+            response.put("message", "Ok");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    };
+
 //    @PutMapping("/change-password/{id}")
 //    @CrossOrigin(origins = "*", maxAge = 3600)
 //    public ResponseEntity<?> changePassword(@PathVariable(value = "id") String id, @RequestBody AccountModel model) {

@@ -2,9 +2,12 @@ package com.quanly.thuvien.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.quanly.thuvien.model.AccountModel;
+import com.quanly.thuvien.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +36,9 @@ public class AuthController {
 
     @Autowired
     private JwtTokenProvider tokenProvider;
+
+	@Autowired
+	private AccountRepository accountRepository;
 	
 	@PostMapping("/login")
 	@CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,9 +49,11 @@ public class AuthController {
 					loginRequest.getUsername().toLowerCase(), loginRequest.getPassword()));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			String jwt = tokenProvider.generateToken(authentication);
+			Optional<AccountModel> account = accountRepository.findByUsername(loginRequest.getUsername());
 			response.put("success", true);
 			response.put("message", "Login successfuly !");
 			response.put("data", new LoginResponse(jwt));
+			response.put("accountId", account.get().getId());
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			response.put("success", false);
