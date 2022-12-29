@@ -76,15 +76,15 @@ public class ReviewService {
 
     public ReviewDTO getObjectDto(ReviewModel object) {
         ReviewDTO dto = new ReviewDTO();
-//        Optional<AccountModel> opAccount = accountRepository.findById(object.getUserId());
-//        if (!opAccount.isPresent()) {
-//            throw new EntityNotFoundException("User Id not found!");
-//        }
+        Optional<AccountModel> opAccount = accountRepository.findById(object.getUserId());
+        if (!opAccount.isPresent()) {
+            throw new EntityNotFoundException("User Id not found!");
+        }
 //        Optional<BookModel> opBook = bookRepository.findById(object.getBookId());
 //        if (!opBook.isPresent()) {
 //            throw new EntityNotFoundException("Book Id not found!");
 //        }
-//        dto.setNameOfCustomer(opAccount.get().getFullname());
+        dto.setNameOfCustomer(opAccount.get().getFullname());
 //        dto.setNameBook(opBook.get().getNameBook());
         BeanUtils.copyProperties(object, dto);
         return dto;

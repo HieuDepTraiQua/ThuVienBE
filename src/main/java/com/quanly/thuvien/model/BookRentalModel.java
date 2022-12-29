@@ -8,22 +8,21 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class BookRentalModel {
 	@Id
 	private String id;
-	
-	@Field(value = "libraryCardId")
-	private String libraryCardId;
-	
-	@Field(value = "staffId")
-	private String staffId;
-	
-	@Field(value = "bookId")
-	private String bookId;
-	
-	@Field(value = "borrowedDate")
-	private String borrowedDate;
-	
-	@Field(value = "returnDate")
-	private String returnDate;
-	
+
+	@Field(value = "nameBook")
+	private String nameBook;
+
+	@Field(value = "author")
+	private String author;
+
+	@Field(value = "image")
+	private String image;
+	@Field(value = "price")
+	private String price;
+	@Field(value = "quantity")
+	private String quantity;
+	@Field(value = "userId")
+	private String userId;
 
 	public String getId() {
 		return id;
@@ -33,43 +32,51 @@ public class BookRentalModel {
 		this.id = id;
 	}
 
-	public String getLibraryCardId() {
-		return libraryCardId;
+	public String getNameBook() {
+		return nameBook;
 	}
 
-	public void setLibraryCardId(String libraryCardId) {
-		this.libraryCardId = libraryCardId;
+	public void setNameBook(String nameBook) {
+		this.nameBook = nameBook;
 	}
 
-	public String getStaffId() {
-		return staffId;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setStaffId(String staffId) {
-		this.staffId = staffId;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
-	public String getBookId() {
-		return bookId;
+	public String getImage() {
+		return image;
 	}
 
-	public void setBookId(String bookId) {
-		this.bookId = bookId;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
-	public String getBorrowedDate() {
-		return borrowedDate;
+	public String getPrice() {
+		return price;
 	}
 
-	public void setBorrowedDate(String borrowedDate) {
-		this.borrowedDate = borrowedDate;
+	public void setPrice(String price) {
+		this.price = price;
 	}
 
-	public String getReturnDate() {
-		return returnDate;
+	public String getQuantity() {
+		return quantity;
 	}
 
-	public void setReturnDate(String returnDate) {
-		this.returnDate = returnDate;
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

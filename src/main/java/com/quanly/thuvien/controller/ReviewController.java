@@ -95,7 +95,7 @@ public class ReviewController {
     @GetMapping()
     @CrossOrigin(origins = "*", maxAge = 3600)
     public ResponseEntity<?> getPagable(@RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "10") int size,
+                                        @RequestParam(defaultValue = "999") int size,
                                         @RequestParam() String bookName) {
         Map<String, Object> response = new HashMap<>();
         try {

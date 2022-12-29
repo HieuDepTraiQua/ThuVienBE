@@ -2,69 +2,75 @@ package com.quanly.thuvien.dto;
 
 public class BookRentalDTO {
 	private String id;
-	private String libraryCardId;
-	private String libraryCard;
-	private String staffId;
-	private String staffName;
-	private String bookId;
-	private String bookName;
-	private String borrowedDate;
-	private String returnDate;
+	private String nameBook;
+	private String author;
+	private String image;
+	private String price;
+	private String quantity;
+	private String userId;
+	private String fullname;
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getLibraryCardId() {
-		return libraryCardId;
-	}
-	public void setLibraryCardId(String libraryCardId) {
-		this.libraryCardId = libraryCardId;
-	}
-	public String getStaffId() {
-		return staffId;
-	}
-	public void setStaffId(String staffId) {
-		this.staffId = staffId;
-	}
-	public String getStaffName() {
-		return staffName;
-	}
-	public void setStaffName(String staffName) {
-		this.staffName = staffName;
-	}
-	public String getBookId() {
-		return bookId;
-	}
-	public void setBookId(String bookId) {
-		this.bookId = bookId;
-	}
-	public String getBookName() {
-		return bookName;
-	}
-	public void setBookName(String bookName) {
-		this.bookName = bookName;
-	}
-	public String getBorrowedDate() {
-		return borrowedDate;
-	}
-	public void setBorrowedDate(String borrowedDate) {
-		this.borrowedDate = borrowedDate;
-	}
-	public String getReturnDate() {
-		return returnDate;
-	}
-	public void setReturnDate(String returnDate) {
-		this.returnDate = returnDate;
+
+	public String getNameBook() {
+		return nameBook;
 	}
 
-	public String getLibraryCard() {
-		return libraryCard;
-	}
-	public void setLibraryCard(String libraryCard) {
-		this.libraryCard = libraryCard;
+	public void setNameBook(String nameBook) {
+		this.nameBook = nameBook;
 	}
 
-	
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
 }
