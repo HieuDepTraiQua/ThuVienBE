@@ -4,7 +4,7 @@ public class ReviewDTO {
     private String id;
     private String userId;
     private String nameOfCustomer;
-    private String vote;
+    private int vote;
     private String detail;
 
     private String bookId;
@@ -35,11 +35,11 @@ public class ReviewDTO {
         this.nameOfCustomer = nameOfCustomer;
     }
 
-    public String getVote() {
+    public int getVote() {
         return vote;
     }
 
-    public void setVote(String vote) {
+    public void setVote(int vote) {
         this.vote = vote;
     }
 

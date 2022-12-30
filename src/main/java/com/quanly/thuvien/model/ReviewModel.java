@@ -14,7 +14,7 @@ public class ReviewModel {
     private String userId;
 
     @Field(value = "vote")
-    private String vote;
+    private int vote;
 
     @Field(value = "detail")
     private String detail;
@@ -38,11 +38,11 @@ public class ReviewModel {
         this.userId = userId;
     }
 
-    public String getVote() {
+    public int getVote() {
         return vote;
     }
 
-    public void setVote(String vote) {
+    public void setVote(int vote) {
         this.vote = vote;
     }
 

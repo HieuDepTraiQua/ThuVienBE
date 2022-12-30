@@ -29,10 +29,21 @@ public class BookRentalService {
 	@Autowired
 	private BookRepository bookRepository;
 	
-	public BookRentalModel create(BookRentalModel rental) {
+	public BookRentalModel create(BookRentalModel rental) throws Exception {
 		Optional<AccountModel> opAccount = accountRepository.findById(rental.getUserId());
 		if (!opAccount.isPresent()) {
 			throw new EntityNotFoundException("UserId Id not found!");
+		}
+		Optional<BookModel> book = bookRepository.findByName(rental.getNameBook());
+		if (book.isPresent()) {
+			if (Integer.parseInt(book.get().getRemainingStock()) > Integer.parseInt(rental.getQuantity())){
+				int remaining = Integer.parseInt(book.get().getRemainingStock()) - Integer.parseInt(rental.getQuantity());
+				book.get().setRemainingStock(Integer.toString(remaining));
+				bookRepository.save(book.get());
+			} else {
+				throw new Exception("No more in stock. Please try again");
+			}
+
 		}
 		return rentalRepository.save(rental);
 	};

@@ -44,9 +44,9 @@ public class ReviewService {
             throw new EntityNotFoundException("Id not found!");
         } else {
             review.setId(id);
-            if (review.getVote() == null || review.getVote().isEmpty()) {
-                review.setVote(optional.get().getVote());
-            }
+//            if (review.getVote() == null || review.getVote().isEmpty()) {
+//                review.setVote(optional.get().getVote());
+//            }
             if (review.getDetail() == null || review.getDetail().isEmpty()) {
                 review.setDetail(optional.get().getDetail());
             }
