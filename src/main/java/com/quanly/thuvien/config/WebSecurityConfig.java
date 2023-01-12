@@ -61,10 +61,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/auth/login").permitAll()
-				.antMatchers(HttpMethod.DELETE).hasAnyAuthority("ADMIN")
-				.antMatchers(HttpMethod.POST).hasAnyAuthority("ADMIN")
-				.antMatchers(HttpMethod.PUT).hasAnyAuthority("ADMIN")
+//				.antMatchers(HttpMethod.DELETE).hasAnyAuthority("ADMIN")
+//				.antMatchers(HttpMethod.POST).hasAnyAuthority("ADMIN")
+//				.antMatchers(HttpMethod.PUT).hasAnyAuthority("ADMIN")
 				.antMatchers("/auth/").permitAll()
+//				.antMatchers("/api/thuvien/rental").permitAll()
+//				.antMatchers("/api/thuvien/vote").permitAll()
 				.anyRequest().authenticated();
 
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
